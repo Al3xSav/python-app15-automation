@@ -66,7 +66,12 @@ class WebAutomation:
         self.driver.execute_script("arguments[0].click();", download_button)
 
     def close(self):
-        self.driver.close()
+        try:
+            if self.driver:
+                self.driver.close()  # Better than .close(), it ends the whole session safely
+                self.driver = None
+        except Exception as e:
+            print(f"[ERROR] Could not close browser: {e}")
 
 if __name__ == "__main__":
     WebAutomation = WebAutomation()
